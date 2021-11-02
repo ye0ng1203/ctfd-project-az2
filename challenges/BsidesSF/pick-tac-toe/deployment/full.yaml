@@ -1,0 +1,76 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: ctf
+  creationTimestamp: null
+  labels:
+    ctf: challenge
+    app: pick-tac-toe
+  name: pick-tac-toe
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pick-tac-toe
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: pick-tac-toe
+        ctf: challenge
+    spec:
+      containers:
+      - image: rdctf/ctfd-pick-tac-toe
+        name: pick-tac-toe
+        resources: {}
+      restartPolicy: Always
+      serviceAccountName: ""
+      automountServiceAccountToken: false
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: ctf
+  creationTimestamp: null
+  labels:
+    app: pick-tac-toe
+  name: pick-tac-toe
+spec:
+  ports:
+  - name: pick-tac-toe-web
+    port: 8000
+    protocol: TCP
+    targetPort: 3000
+  selector:
+    app: pick-tac-toe
+  type: ClusterIP
+status:
+  loadBalancer: {}
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: pick-tac-toe
+  creationTimestamp: null
+  namespace: ctf
+  labels:
+    app: pick-tac-toe
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`pick-tac-toe.ctf.rd-security-training.bbctest01.uk`)
+      kind: Rule
+      services:
+        - name: pick-tac-toe
+          namespace: ctf
+          kind: Service
+          port: 8000
+  tls:
+    # Specifying domains here adds the Host header to request to pod
+    domains:
+      - main: pick-tac-toe.ctf.rd-security-training.bbctest01.uk
+    secretName: traefik-ctf-cert

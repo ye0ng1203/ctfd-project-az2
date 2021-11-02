@@ -1,0 +1,76 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: ctf
+  creationTimestamp: null
+  labels:
+    ctf: challenge
+    app: svgmagic
+  name: svgmagic
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: svgmagic
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: svgmagic
+        ctf: challenge
+    spec:
+      containers:
+      - image: rdctf/ctfd-svgmagic
+        name: svgmagic
+        resources: {}
+      restartPolicy: Always
+      serviceAccountName: ""
+      automountServiceAccountToken: false
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: ctf
+  creationTimestamp: null
+  labels:
+    app: svgmagic
+  name: svgmagic
+spec:
+  ports:
+  - name: svgmagic-web
+    port: 8000
+    protocol: TCP
+    targetPort: 9999
+  selector:
+    app: svgmagic
+  type: ClusterIP
+status:
+  loadBalancer: {}
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: svgmagic
+  creationTimestamp: null
+  namespace: ctf
+  labels:
+    app: svgmagic
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`svgmagic.ctf.rd-security-training.bbctest01.uk`)
+      kind: Rule
+      services:
+        - name: svgmagic
+          namespace: ctf
+          kind: Service
+          port: 8000
+  tls:
+    # Specifying domains here adds the Host header to request to pod
+    domains:
+      - main: svgmagic.ctf.rd-security-training.bbctest01.uk
+    secretName: traefik-ctf-cert

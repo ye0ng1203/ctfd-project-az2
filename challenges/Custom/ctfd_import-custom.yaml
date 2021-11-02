@@ -1,0 +1,132 @@
+name: Byte To Eat
+value: 2000
+description: I was sent this PNG and I'm sure it contains sensitive data but I cannot read it. Can you help? <br/>Flag in CTF{xxxxxx} format.
+category: Forensics
+type: standard
+flags:
+- flag: CTF{sorry_nothing_to_eat_here}
+  type: static
+hints:
+- hint: "I spelt Bite wrong in the title, that was careless wasn't it..."
+  type: standard
+  cost: 0
+- hint: "I've eaten my lunch now, it was a 'magic byte' sandwich."
+  type: standard
+  cost: 0
+hidden: false
+files:
+- export.d/byte-to-eat/broken.png
+---
+name: Recursion
+value: 2000
+description: Can you extract the flag.txt file? <br/>Flag in CTF{xxxxxx} format.
+category: Forensics
+type: standard
+flags:
+- flag: CTF{turtles_all_the_way_down}
+  type: static
+hints:
+- hint: "Don't try it by hand, it may take a while!"
+  type: standard
+  cost: 0
+hidden: false
+files:
+- export.d/recursion/flag.zip
+---
+name: Recursion 2
+value: 2500
+description: Can you extract the flag from this file? <br/>Flag in CTF{xxxxxx} format.
+category: Forensics
+type: standard
+flags:
+- flag: CTF{assemble_the_pieces}
+  type: static
+hints:
+- hint: "Don't try it by hand, it may take a while!"
+  type: standard
+  cost: 0
+hidden: false
+files:
+- export.d/recursion-2/flag.zip
+---
+name: Appended
+value: 2000
+description: This image isn't what it seems... <br/>Flag in CTF{xxxxxx} format.
+category: Forensics
+type: standard
+flags:
+- flag: CTF{binwalk_to_victory}
+  type: static
+hints:
+- hint: "Take a Walk through this file"
+  type: standard
+  cost: 0
+- hint: "The password is in plain sight!"
+  type: standard
+  cost: 0
+hidden: false
+files:
+- export.d/appended/appended.bin.jpg
+---
+name: Who Dis?
+value: 2500
+description: Who took this Photo? <br/>Flag in Xxxxxx Yyyyyyy format.
+category: OSINT
+type: standard
+flags:
+- flag: Arunopal Banerjee
+  type: static
+hints:
+- hint: "Google Image Search is your friend here"
+  type: standard
+  cost: 0
+hidden: false
+files:
+- export.d/who-dis/image.webp
+---
+name: Flight
+value: 2500
+description: A reporter wanted to know where this flight is headed. Where does he (the reporter) live? <br/>Flag in Xxxxxx Yyyyyyy format.
+category: OSINT
+type: standard
+flags:
+- flag: San Francisco
+  type: static
+hints:
+- hint: "Google Image Search is your friend here"
+  type: standard
+  cost: 0
+hidden: false
+files:
+- export.d/flight/image.webp
+---
+name: Legion of Doom
+value: 3000
+description: The Legion have somehow setup a website on the ctf.rd-security-training.bbctest01.uk domain but we cannot find it, can you help?<br/>Flag in CTF{xxxxxx} format.
+category: OSINT
+type: standard
+flags:
+- flag: CTF{security_through_obscurity_isnt_valid}
+  type: static
+hints:
+- hint: I wonder if they are using https...
+  type: standard
+  cost: 0
+- hint: A friend told me that "Certificate Transparency Logs" may help
+  type: standard
+  cost: 2000
+hidden: false
+---
+name: Oh Crap!
+value: 3000
+description: We noticed some traffic to ohcrap.ctf.rd-security-training.bbctest01.uk a few days ago but there appears to be nothing there...<br/>Flag in CTF{xxxxxx} format.
+category: OSINT
+type: standard
+flags:
+- flag: CTF{the_internet_remembers}
+  type: static
+hints:
+- hint: WayBack a long time in history...
+  type: standard
+  cost: 1000
+hidden: false

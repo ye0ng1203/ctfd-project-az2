@@ -1,0 +1,78 @@
+version: '2'
+
+services:
+  louketo-proxy:
+    image: quay.io/louketo/louketo-proxy
+    ports:
+      - 8443:8443
+    command: "--listen :8443 --upstream-url http://ctfd-nginx:8080 --discovery-url https://sso-nbe.bbcis.uk/auth/realms/rd-security-training --client-id ${CLIENT_ID} --client-secret ${CLIENT_SECRET} --tls-cert /opt/tls-cert.pem --tls-private-key /opt/tls-key.pem"
+    depends_on:
+      - ctfd-nginx
+    volumes:
+      - ./127.0.0.1-key.pem:/opt/tls-key.pem
+      - ./127.0.0.1.pem:/opt/tls-cert.pem
+
+  ctfd-nginx:
+    image: nginx:1.17
+    volumes:
+      - ./conf/nginx/http.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - ctfd
+      # - echo
+
+  # # Echo is not needed but useful for testing
+  # echo:
+  #   image: gcr.io/google_containers/echoserver:1.8
+  #   ports:
+  #     - 8080:8080
+
+  ctfd:
+    build: .
+    user: root
+    restart: always
+    environment:
+      - UPLOAD_FOLDER=/var/uploads
+      - DATABASE_URL=mysql+pymysql://ctfd:ctfd@ctfd-mysql-db/ctfd
+      - REDIS_URL=redis://ctfd-redis-cache:6379
+      - WORKERS=1
+      - LOG_FOLDER=/var/log/CTFd
+      - ACCESS_LOG=-
+      - ERROR_LOG=-
+      - REVERSE_PROXY=true
+    volumes:
+      - .data/CTFd/logs:/var/log/CTFd
+      - .data/CTFd/uploads:/var/uploads
+      - .:/opt/CTFd:ro
+    depends_on:
+      - ctfd-mysql-db
+    networks:
+        default:
+        internal:
+
+  ctfd-mysql-db:
+    image: mariadb:10.4.12
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=ctfd
+      - MYSQL_USER=ctfd
+      - MYSQL_PASSWORD=ctfd
+      - MYSQL_DATABASE=ctfd
+    volumes:
+      - .data/mysql:/var/lib/mysql
+    networks:
+        internal:
+    # This command is required to set important mariadb defaults
+    command: [mysqld, --character-set-server=utf8mb4, --collation-server=utf8mb4_unicode_ci, --wait_timeout=28800, --log-warnings=0]
+
+  ctfd-redis-cache:
+    image: redis:4
+    restart: always
+    volumes:
+    - .data/redis:/data
+    networks:
+        internal:
+
+networks:
+    default:
+    internal:
+        internal: true

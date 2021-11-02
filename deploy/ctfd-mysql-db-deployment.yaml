@@ -1,0 +1,102 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  namespace: ctfd
+  annotations:
+    volume.beta.kubernetes.io/storage-class: "ctfd-db-efs-az2"
+  name: ctfd-mysql-az2
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 100Mi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: ctfd
+  creationTimestamp: null
+  labels:
+    ctfd: mysql
+    app: ctfd-mysql-db
+  name: ctfd-mysql-db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ctfd-mysql-db
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        ctfd: mysql
+        app: ctfd-mysql-db
+    spec:
+      containers:
+      - args:
+        - mysqld
+        - --character-set-server=utf8mb4
+        - --collation-server=utf8mb4_unicode_ci
+        - --wait_timeout=28800
+        - --log-warnings=0
+        env:
+        - name: MYSQL_DATABASE
+          value: ctfd
+        - name: MYSQL_PASSWORD
+          value: ctfd
+        - name: MYSQL_ROOT_PASSWORD
+          value: ctfd
+        - name: MYSQL_USER
+          value: ctfd
+        image: mariadb:10.4.12
+        imagePullPolicy: "Always"
+        name: ctfd-mysql-db
+        resources: {}
+        volumeMounts:
+        - mountPath: /var/lib/mysql
+          name: ctfd-mysql-db-pv
+        - mountPath: /etc/mysql/
+          name: mysql-conf
+        - mountPath: /etc/mysql/conf.d
+          name: conf-d
+        - mountPath: /etc/mysql/mariadb.conf.d
+          name: mariadb-conf
+      restartPolicy: "Always"
+      serviceAccountName: ""
+      automountServiceAccountToken: false
+      volumes:
+      - name: ctfd-mysql-db-pv
+        persistentVolumeClaim:
+          claimName: ctfd-mysql-az2
+      - name: mysql-conf         
+        configMap:
+          name: mysql-conf
+      - name: conf-d
+        configMap:
+          name: conf-d 
+      - name: mariadb-conf
+        emptyDir: {}
+status: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: ctfd
+  creationTimestamp: null
+  labels:
+    app: ctfd-mysql-db
+  name: ctfd-mysql-db
+spec:
+  ports:
+  - name: mysql
+    port: 3306
+    protocol: TCP
+    targetPort: 3306
+    nodePort: 30300
+  selector:
+    app: ctfd-mysql-db
+  type: NodePort
+status: {}

@@ -1,0 +1,244 @@
+name: Hurdles
+value: 2000
+description: 'You might <b>curl</b> up with fear at this challenge <br/>Flag in CTF{xxxxxx} format.<br/><br/> Challenge at https://hurdles.ctf.rd-security-training.bbctest01.uk/'
+category: "Beginner-101"
+type: standard
+flags:
+- flag: CTF{I_have_been_expecting_U}
+  type: static
+hints:
+- hint: The Curl command line tool is your friend here
+  type: standard
+  cost: 0
+- hint: Most hurdles require use of a curl command line flag. You may wish to look at data-raw for one of the hurdles.
+  type: standard
+  cost: 0
+hidden: false
+---
+name: Futurella
+value: 1000
+description: 'Just have a look around! <br/>Flag in CTF{xxxxxx} format.<br/><br/> Challenge at https://futurella.ctf.rd-security-training.bbctest01.uk/'
+category: "Beginner-101"
+type: standard
+flags:
+- flag: CTF{bring_it_back}
+  type: static
+hints:
+- hint: Have you seen the film "Source Code"?
+  type: standard
+  cost: 0
+hidden: false
+---
+name: Kookie
+value: 1000
+description: 'When surveyed 9/10 R&D Engineers liked cookies.<br/>Flag in CTF{xxxxxx} format.<br/><br/> Challenge at https://futurella.ctf.rd-security-training.bbctest01.uk/'
+category: "Beginner-101"
+type: standard
+flags:
+- flag: CTF{kookie_cookies}
+  type: static
+hints:
+- hint: The browser tools will help you
+  type: standard
+  cost: 0
+- hint: How can you change your logged in username of cookie?
+  type: standard
+  cost: 0
+hidden: false
+---
+name: pick-tac-toe
+value: 1500
+description: 'Play some tic-tac-toe and validate that the computer is very good at it.<br/>Flag in CTF{xxxxxx} format.<br/><br/> Challenge at https://pick-tac-toe.ctf.rd-security-training.bbctest01.uk/'
+category: "Beginner-101"
+type: standard
+flags:
+- flag: CTF{i_beat_the_impossible}
+  type: static
+hints:
+- hint: The computer will always win unless you cheat
+  type: standard
+  cost: 0
+- hint: Where do you think the move is validated?
+  type: standard
+  cost: 0
+hidden: false
+---
+name: svgmagic
+value: 1500
+description: 'The flag is in a file called flag.txt on the system. <br/>Flag in CTF{xxxxxx} format.<br/><br/> Challenge at https://svgmagic.ctf.rd-security-training.bbctest01.uk/'
+category: "Beginner-101"
+type: standard
+flags:
+- flag: CTF{haha_no_imagemagick_sorry}
+  type: static
+hints:
+- hint: Did you know that an SVG file is just an XML file?
+  type: standard
+  cost: 0
+- hint: XXE
+  type: standard
+  cost: 0
+hidden: false
+---
+name: Barcode
+value: 3000
+description: This person clearly has good data securing as they have very cleanly
+  scrubbed the data from the image.
+category: Forensics
+type: standard
+flags:
+- flag: CTF{way_too_common}
+  type: static
+hints:
+- hint: I wonder what the data in that barcode says
+  type: standard
+  cost: 0
+hidden: false
+files:
+- export.d/barcode/challenge.png
+---
+name: had-a-bad-day
+value: 2500
+description: 'Can you read flag.php? <br/>Flag in CTF{xxxxxx} format.<br/><br/> Challenge at https://had-a-bad-day.ctf.rd-security-training.bbctest01.uk/'
+category: "LFI"
+type: standard
+flags:
+- flag: CTF{haha_no_imagemagick_sorry}
+  type: static
+hints:
+- hint: PHP + LFI? Have you tried asking google?
+  type: standard
+  cost: 0
+- hint: Sometimes you have to "filter" out some words to find the tips in a challenge
+  type: standard
+  cost: 0
+hidden: false
+---
+name: All Your Bases Belong To Us
+value: 6000
+description: A lot of the computer world is just layers of abstraction.  Layers and layers
+  and layers and layers and layers and layers and layers and layers and ...
+  layers and layers and ... <br/>Flag in CTF{xxxxxx} format.
+category: Forensics
+type: standard
+flags:
+- flag: CTF{what_the_hell_is_base85}
+  type: static
+hints:
+- hint: There isn't just base64 in here...
+  type: standard
+  cost: 0
+- hint: There is a total of 9 different encodings. Only 4 of these are BaseXX.
+  type: standard
+  cost: 0
+hidden: false
+files:
+- export.d/all_the_bases/flag.txt
+---
+name: Zippy
+value: 3000
+description: Can you read the flag from the PCAP? <br/>Flag in CTF{xxxxxx} format.
+category: Network
+type: standard
+flags:
+- flag: CTF{this_flag_is_your_flag}
+  type: static
+hints:
+- hint: You may find Wireshark helpful
+  type: standard
+  cost: 0
+- hint: Zippy is password protected. Maybe talk to John "the Ripper" Smith.
+  type: standard
+  cost: 0
+hidden: false
+files:
+- export.d/zippy/zippy.pcapng
+---
+name: TheKey
+value: 5000
+description: Can you read the flag from the PCAP? <br/>Flag in CTF{XXXXXXX} format.
+category: Network
+type: standard
+flags:
+- flag: CTF{MY_FAVOURITE_EDITOR_IS_VIM}
+  type: static
+hints:
+- hint: Try googling decode USB Keyboard PCAP
+  type: standard
+  cost: 0
+- hint: https://blog.stayontarget.org/2019/03/decoding-mixed-case-usb-keystrokes-from.html is helpful. Also note that the user appears to be using VIM shortcuts.
+  type: standard
+  cost: 2000
+hidden: false
+files:
+- export.d/thekey/out.pcapng
+---
+name: SlashSlash
+value: 1000
+description: Get the flag from this zip <br/>Flag in CTF{xxxxxx} format.
+category: Forensics
+type: standard
+flags:
+- flag: CTF{always_add_comments}
+  type: static
+hints: {}
+hidden: false
+files:
+- export.d/slashslash/flag.zip
+---
+name: Cloud2Clown (Flag 1)
+value: 5000
+description: Sometimes you see marketing materials that use the word cloud to the point that
+    it starts to lose all meaning.  This service allows you to fix that with clowns
+    instead of clouds.<br/>
+    This challenge has two flags, this challenge is for flag 1<br/>
+    Flag in CTF{xxxxxx} format.
+    <br/> Challenge at https://cloud2clown.ctf.rd-security-training.bbctest01.uk/'
+category: Web
+type: standard
+flags:
+- flag: CTF{we_hope_that_wasnt_hard}
+  type: static
+hints:
+- hint: Despite this being Flag 1, you should attempt Flag 2 first.
+  type: standard
+  cost: 0
+- hint: You may find https://jsbin.com/ and https://requestbin.com/ helpful
+  type: standard
+  cost: 0
+hidden: false
+---
+name: Cloud2Clown (Flag 2)
+value: 2000
+description: Sometimes you see marketing materials that use the word cloud to the point that
+    it starts to lose all meaning.  This service allows you to fix that with clowns
+    instead of clouds.<br/>
+    This challenge has two flags, this challenge is for flag 2<br/>
+    Flag in CTF{xxxxxx} format.
+    <br/> Challenge at https://cloud2clown.ctf.rd-security-training.bbctest01.uk/'
+category: Web
+type: standard
+flags:
+- flag: CTF{ssrf_for_more_than_metadata}
+  type: static
+hints:
+- hint: This server runs on port 8081 locally
+  type: standard
+  cost: 0
+hidden: false
+---
+name: Hate Self
+value: 8000
+description: I heard you like archives so I put archives in your archives... <br/>Flag in flag[xxxxxx] format.
+category: Forensics
+type: standard
+flags:
+- flag: flag[tostrivetoseektofindandnottoyield]
+  type: static
+hints:
+- hint: No hints for this one. Expect it to be painful!
+  type: standard
+  cost: 0
+hidden: false
+files:
+- export.d/hate-self/hate-self.bin
