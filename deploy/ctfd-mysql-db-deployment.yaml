@@ -1,17 +1,3 @@
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  namespace: ctfd
-  annotations:
-    volume.beta.kubernetes.io/storage-class: "ctfd-db-efs-az2"
-  name: ctfd-mysql-az2
-spec:
-  accessModes:
-  - ReadWriteOnce
-  resources:
-    requests:
-      storage: 100Mi
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
